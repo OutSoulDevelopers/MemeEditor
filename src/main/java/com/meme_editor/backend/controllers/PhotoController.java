@@ -1,20 +1,22 @@
 package com.meme_editor.backend.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import com.meme_editor.backend.data.Photo;
+import com.meme_editor.backend.services.PhotoService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+
+@RestController
+@RequestMapping("api/v1/photos")
+@AllArgsConstructor
 public class PhotoController {
+    private final PhotoService photoService;
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
-    }
-    @GetMapping("/")
-    public String index() {
-        return "index";
+    @GetMapping
+    public List<Photo> fetchAllPhotos() {
+        return photoService.getAllPhotos();
     }
 }
